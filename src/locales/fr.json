@@ -1,0 +1,41 @@
+{
+  "common": {
+    "language": "Langue",
+    "previewAs": "Aperçu en tant que",
+    "placeholder": "Cet écran est un espace réservé. Son contenu arrive dans un prochain lot."
+  },
+  "roles": {
+    "client": "Client",
+    "practitioner": "Praticien",
+    "admin": "Admin"
+  },
+  "client": {
+    "home": "Accueil",
+    "book": "Réserver",
+    "reports": "Mes rapports",
+    "profile": "Profil"
+  },
+  "practitioner": {
+    "dashboard": "Tableau de bord",
+    "clients": "Clients",
+    "appointments": "Rendez-vous",
+    "assessments": "Évaluations",
+    "reports": "Rapports",
+    "settings": "Paramètres"
+  },
+  "admin": {
+    "team": "Équipe",
+    "availability": "Disponibilités",
+    "data": "Données"
+  },
+  "dev": {
+    "test": "Test",
+    "iconTest": "Test des icônes et des polices",
+    "icons": "Icônes (Boxicons 2.1.4)",
+    "sizesColors": "Tailles et couleurs",
+    "fonts": "Polices et accents",
+    "sampleEn": "Muscle tension assessment, area beside the shoulder",
+    "sampleFr": "Évaluation de la tension musculaire, œuvre à côté de l'épaule",
+    "glyphs": "É È Ê À Â Ç Î Ï Ô Œ Ù Û Ü é è ê à â ç î ï ô œ ù û ü ÿ « » ’"
+  }
+}
