@@ -12,3 +12,15 @@
 - @fast-base/icons was checked and rejected: last published Aug 2023, only 42 Boxicons, no check or language icon. Our own generated paths cover the full Boxicons set.
 - /icon-test (open it with the "Test" chip in DevBar) shows icons, sizes/colors and EN/FR accent text in Poppins and Jost. Dev-only: delete it with DevBar before release.
 
+<!-- chunk-3 -->
+## Chunk 3: Supabase, database, auth, role routing
+- Supabase client: src/lib/supabase.ts (public URL + publishable key from .env.local; the secret/service_role key never goes in the app). Run supabase/sql/001 to 004 in the SQL Editor in order (tables use explicit GRANTs: Supabase no longer auto-grants since May 2026); run 900_security_test.sql after every schema change, every row must say true.
+- Roles live in profiles.role: default client, never writable from the app (column grants + trigger); only the dashboard or admin_set_role() changes it. First admin = promote yourself in the SQL Editor. Clients cannot write appointments directly: booking, cancel and reschedule will be database functions.
+- Role routing: lib/auth.tsx (session + profile) and Stack.Protected in the root layout; the temporary role switch is gone. business_settings.timezone is a PLACEHOLDER (Africa/Kigali): confirm it with the owner.
+
+<!-- chunk-3b -->
+## Chunk 3b: deploy with Vercel
+- Deploy: `bash scripts/deploy.sh "message"` commits, pushes a branch and opens a Pull Request; Vercel builds a Preview per PR and the live site from main; `bash scripts/deploy.sh --merge` merges the PR (goes live). Nothing needs to run locally.
+- Web is a single-page app (app.json web.output = single, vercel.json rewrites to index.html): SDK 58's default `server` output does not work on Vercel static hosting. Vercel only deploys the WEB build; phone builds come later with EAS.
+- Vercel needs EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY (Production + Preview) BEFORE the build, they are inlined at build time; never the secret key. scripts/check-env.mjs stops the build with a clear message if they are missing.
+

@@ -1,8 +1,9 @@
 import { Redirect, type Href } from 'expo-router';
-import { ROLE_HOME, useRole } from '../lib/role';
+import { useAuth } from '../lib/auth';
+import { ROLE_HOME } from '../lib/role';
 
-// "/" just sends you to the first screen of the current role.
+// "/" sends you to your role's home, or to sign in.
 export default function Index() {
-  const { role } = useRole();
-  return <Redirect href={ROLE_HOME[role] as Href} />;
+  const { profile } = useAuth();
+  return <Redirect href={(profile ? ROLE_HOME[profile.role] : '/sign-in') as Href} />;
 }

@@ -36,6 +36,35 @@
     "fonts": "Polices et accents",
     "sampleEn": "Muscle tension assessment, area beside the shoulder",
     "sampleFr": "Évaluation de la tension musculaire, œuvre à côté de l'épaule",
-    "glyphs": "É È Ê À Â Ç Î Ï Ô Œ Ù Û Ü é è ê à â ç î ï ô œ ù û ü ÿ « » ’"
+    "glyphs": "É È Ê À Â Ç Î Ï Ô Œ Ù Û Ü é è ê à â ç î ï ô œ ù û ü ÿ « » ’",
+    "signedInAs": "Connecté en tant que"
+  },
+  "auth": {
+    "signInTitle": "Connexion",
+    "signUpTitle": "Créer votre compte",
+    "email": "Courriel",
+    "password": "Mot de passe",
+    "passwordHint": "au moins 8 caractères",
+    "fullName": "Nom complet",
+    "signIn": "Se connecter",
+    "signUp": "Créer un compte",
+    "signOut": "Se déconnecter",
+    "noAccount": "Pas encore de compte ?",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "checkEmail": "Consultez votre boîte de réception et confirmez votre adresse courriel, puis connectez-vous.",
+    "profileErrorTitle": "Un problème est survenu",
+    "profileError": "Impossible de charger votre profil. Vérifiez votre connexion et réessayez.",
+    "retry": "Réessayer",
+    "error": {
+      "required": "Veuillez remplir tous les champs.",
+      "shortPassword": "Votre mot de passe doit contenir au moins 8 caractères.",
+      "invalidCredentials": "Le courriel ou le mot de passe est incorrect.",
+      "emailTaken": "Cette adresse courriel est déjà utilisée.",
+      "weakPassword": "Choisissez un mot de passe plus robuste (au moins 8 caractères).",
+      "rateLimit": "Trop de tentatives. Veuillez patienter un instant et réessayer.",
+      "emailNotConfirmed": "Veuillez d’abord confirmer votre adresse courriel.",
+      "network": "Impossible de joindre le serveur. Vérifiez votre connexion.",
+      "generic": "Un problème est survenu. Veuillez réessayer."
+    }
   }
 }
