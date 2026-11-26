@@ -36,6 +36,35 @@
     "fonts": "Fonts and accents",
     "sampleEn": "Muscle tension assessment, area beside the shoulder",
     "sampleFr": "Évaluation de la tension musculaire, œuvre à côté de l'épaule",
-    "glyphs": "É È Ê À Â Ç Î Ï Ô Œ Ù Û Ü é è ê à â ç î ï ô œ ù û ü ÿ « » ’"
+    "glyphs": "É È Ê À Â Ç Î Ï Ô Œ Ù Û Ü é è ê à â ç î ï ô œ ù û ü ÿ « » ’",
+    "signedInAs": "Signed in as"
+  },
+  "auth": {
+    "signInTitle": "Sign in",
+    "signUpTitle": "Create your account",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "at least 8 characters",
+    "fullName": "Full name",
+    "signIn": "Sign in",
+    "signUp": "Create account",
+    "signOut": "Sign out",
+    "noAccount": "No account yet?",
+    "haveAccount": "Already have an account?",
+    "checkEmail": "Check your inbox and confirm your email address, then sign in.",
+    "profileErrorTitle": "Something went wrong",
+    "profileError": "We could not load your profile. Check your connection and try again.",
+    "retry": "Try again",
+    "error": {
+      "required": "Please fill in all fields.",
+      "shortPassword": "Your password needs at least 8 characters.",
+      "invalidCredentials": "The email or password is incorrect.",
+      "emailTaken": "This email address is already registered.",
+      "weakPassword": "Choose a stronger password (at least 8 characters).",
+      "rateLimit": "Too many attempts. Please wait a moment and try again.",
+      "emailNotConfirmed": "Please confirm your email address first.",
+      "network": "Could not reach the server. Check your connection.",
+      "generic": "Something went wrong. Please try again."
+    }
   }
 }
