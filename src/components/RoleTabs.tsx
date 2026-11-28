@@ -3,7 +3,7 @@
 import { Tabs } from 'expo-router';
 import { Platform, useWindowDimensions } from 'react-native';
 import { useI18n } from '../lib/i18n';
-import { colors, fonts, fontSizes } from '../theme';
+import { breakpoints, colors, fonts, fontSizes, radius } from '../theme';
 import { Icon, type IconName } from './Icon';
 
 export type TabItem = { name: string; labelKey: string; icon: IconName };
@@ -13,7 +13,7 @@ type Props = { items: TabItem[]; sidebarOnWeb?: boolean };
 export function RoleTabs({ items, sidebarOnWeb = false }: Props) {
   const { t } = useI18n(); // re-renders the labels when the language changes
   const { width } = useWindowDimensions();
-  const sidebar = sidebarOnWeb && Platform.OS === 'web' && width >= 768;
+  const sidebar = sidebarOnWeb && Platform.OS === 'web' && width >= breakpoints.wide;
 
   return (
     <Tabs
@@ -23,7 +23,9 @@ export function RoleTabs({ items, sidebarOnWeb = false }: Props) {
         tabBarLabelPosition: sidebar ? 'beside-icon' : 'below-icon',
         tabBarActiveTintColor: colors.plum,
         tabBarInactiveTintColor: colors.muted,
+        tabBarActiveBackgroundColor: sidebar ? colors.plumTint : undefined,
         tabBarLabelStyle: { fontFamily: fonts.bodyMedium, fontSize: sidebar ? fontSizes.sm : fontSizes.xs },
+        tabBarItemStyle: sidebar ? { borderRadius: radius.md, marginHorizontal: 8, marginVertical: 2 } : undefined,
         tabBarStyle: { backgroundColor: colors.white, borderColor: colors.border },
       }}
     >

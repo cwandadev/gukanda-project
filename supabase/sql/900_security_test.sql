@@ -77,6 +77,7 @@ begin
       (ca, 'a@test.invalid', '{}'), (cb, 'b@test.invalid', '{}'),
       (pa, 'pa@test.invalid', '{}'), (pq, 'pq@test.invalid', '{}'), (ad, 'ad@test.invalid', '{}'),
       (ex, 'ex@test.invalid', '{"role":"admin","full_name":"Sneaky"}');
+    update public.business_settings set timezone = 'Europe/Paris';   -- rolled back with everything else
     update public.profiles set role = 'practitioner' where id in (pa, pq);
     update public.profiles set role = 'admin' where id = ad;
     insert into public.practitioner_clients (practitioner_id, client_id) values (pa, ca), (pq, cb);
@@ -211,6 +212,52 @@ begin
       'insert into public.audit_log (action, details) values (''test_export'', ''{}''::jsonb)');
     r := r || pg_temp.t_allowed('8.9 the server key (service_role) can read client data', null, 'service_role',
       'select count(*) from public.client_intake');
+
+    -- ---------- 9. working hours, time off, booking rules ----------
+    r := r || pg_temp.t_allowed('9.1 practitioner can set own weekly hours', pa, 'authenticated',
+      format('select public.set_weekly_hours(%L, %L::jsonb)', pa, '[{"weekday":1,"start_time":"09:00","end_time":"12:00"},{"weekday":1,"start_time":"14:00","end_time":"18:00"}]'));
+    r := r || pg_temp.t_count('9.2 the hours were saved (2 ranges)', pa, 'authenticated', format('select count(*) from public.availability where practitioner_id = %L', pa), 2);
+    r := r || pg_temp.t_count('9.3 clients can read opening hours (needed to book)', cb, 'authenticated', format('select count(*) from public.availability where practitioner_id = %L', pa), 2);
+    r := r || pg_temp.t_refused('9.4 overlapping hours on one day are refused', pa, 'authenticated',
+      format('select public.set_weekly_hours(%L, %L::jsonb)', pa, '[{"weekday":2,"start_time":"09:00","end_time":"12:00"},{"weekday":2,"start_time":"11:00","end_time":"13:00"}]'));
+    r := r || pg_temp.t_refused('9.5 hours that end before they start are refused', pa, 'authenticated',
+      format('select public.set_weekly_hours(%L, %L::jsonb)', pa, '[{"weekday":2,"start_time":"12:00","end_time":"09:00"}]'));
+    r := r || pg_temp.t_count('9.6 a refused save changes nothing (still 2 ranges)', pa, 'authenticated', format('select count(*) from public.availability where practitioner_id = %L', pa), 2);
+    r := r || pg_temp.t_refused('9.7 another practitioner cannot set these hours', pq, 'authenticated',
+      format('select public.set_weekly_hours(%L, %L::jsonb)', pa, '[{"weekday":3,"start_time":"09:00","end_time":"12:00"}]'));
+    r := r || pg_temp.t_count('9.8 ...and the hours are untouched', pa, 'authenticated', format('select count(*) from public.availability where practitioner_id = %L', pa), 2);
+    r := r || pg_temp.t_refused('9.9 a client cannot set hours', cb, 'authenticated',
+      format('select public.set_weekly_hours(%L, %L::jsonb)', cb, '[{"weekday":3,"start_time":"09:00","end_time":"12:00"}]'));
+    r := r || pg_temp.t_allowed('9.10 admin can set a practitioner''s hours', ad, 'authenticated',
+      format('select public.set_weekly_hours(%L, %L::jsonb)', pq, '[{"weekday":4,"start_time":"10:00","end_time":"16:00"}]'));
+    r := r || pg_temp.t_refused('9.11 admin cannot set hours for a non-practitioner', ad, 'authenticated',
+      format('select public.set_weekly_hours(%L, %L::jsonb)', cb, '[{"weekday":4,"start_time":"10:00","end_time":"16:00"}]'));
+    r := r || pg_temp.t_allowed('9.12 practitioner can add time off (summer)', pa, 'authenticated',
+      format('select public.add_time_off(%L, %L, %L, %L)', pa, '2026-07-01 00:00', '2026-07-02 00:00', 'Holiday'));
+    r := r || pg_temp.t_allowed('9.13 practitioner can add time off (winter)', pa, 'authenticated',
+      format('select public.add_time_off(%L, %L, %L)', pa, '2026-12-01 00:00', '2026-12-02 00:00'));
+    r := r || pg_temp.t_count('9.14 France summer time stored correctly in UTC (00:00 Paris = 22:00 UTC)', null, 'postgres',
+      format('select count(*) from public.time_off where practitioner_id = %L and starts_at = %L::timestamptz', pa, '2026-06-30 22:00:00+00'), 1);
+    r := r || pg_temp.t_count('9.15 France winter time stored correctly in UTC (00:00 Paris = 23:00 UTC)', null, 'postgres',
+      format('select count(*) from public.time_off where practitioner_id = %L and starts_at = %L::timestamptz', pa, '2026-11-30 23:00:00+00'), 1);
+    r := r || pg_temp.t_refused('9.16 time off that ends before it starts is refused', pa, 'authenticated',
+      format('select public.add_time_off(%L, %L, %L)', pa, '2026-08-02 00:00', '2026-08-01 00:00'));
+    r := r || pg_temp.t_refused('9.17 another practitioner cannot add time off for someone else', pq, 'authenticated',
+      format('select public.add_time_off(%L, %L, %L)', pa, '2026-09-01 00:00', '2026-09-02 00:00'));
+    r := r || pg_temp.t_refused('9.18 a client cannot add time off', cb, 'authenticated',
+      format('select public.add_time_off(%L, %L, %L)', cb, '2026-09-01 00:00', '2026-09-02 00:00'));
+    r := r || pg_temp.t_count('9.19 clients cannot see anyone''s time off', cb, 'authenticated', format('select count(*) from public.time_off where practitioner_id = %L', pa), 0);
+    r := r || pg_temp.t_count('9.20 the other practitioner cannot see it either', pq, 'authenticated', format('select count(*) from public.time_off where practitioner_id = %L', pa), 0);
+    r := r || pg_temp.t_count('9.21 a client cannot change booking rules (0 rows changed)', cb, 'authenticated',
+      'with u as (update public.business_settings set cancel_notice_hours = 1 returning 1) select count(*) from u', 0);
+    r := r || pg_temp.t_count('9.22 a practitioner cannot change booking rules (0 rows changed)', pa, 'authenticated',
+      'with u as (update public.business_settings set cancel_notice_hours = 1 returning 1) select count(*) from u', 0);
+    r := r || pg_temp.t_count('9.23 admin can change booking rules (1 row changed)', ad, 'authenticated',
+      'with u as (update public.business_settings set cancel_notice_hours = 48, slot_step_minutes = 15, booking_horizon_days = 90 returning 1) select count(*) from u', 1);
+    r := r || pg_temp.t_refused('9.24 an impossible rule value is refused', ad, 'authenticated', 'update public.business_settings set cancel_notice_hours = -5');
+    r := r || pg_temp.t_refused('9.25 an unknown time zone name is refused', null, 'postgres', 'update public.business_settings set timezone = ''Mars/Olympus''');
+    r := r || pg_temp.t_count('9.26 everyone logged in can read the booking rules', cb, 'authenticated', 'select count(*) from public.business_settings', 1);
+    r := r || pg_temp.t_refused('9.27 visitors cannot read the booking rules', null, 'anon', 'select count(*) from public.business_settings');
 
     raise exception using errcode = 'P0001', message = 'rollback test data';
   exception when sqlstate 'P0001' then null;

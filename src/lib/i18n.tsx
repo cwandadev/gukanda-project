@@ -1,4 +1,5 @@
 // Tiny translation layer: t('client.home') looks the key up in en.json / fr.json.
+// Values may contain {name}-style placeholders: t('home.greeting', { name: 'Emma' }).
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import en from '../locales/en.json';
@@ -14,7 +15,8 @@ function lookup(dict: unknown, key: string): string | undefined {
   return typeof value === 'string' ? value : undefined;
 }
 
-type I18nValue = { lang: Lang; setLang: (l: Lang) => void; t: (key: string) => string };
+export type Params = Record<string, string | number>;
+type I18nValue = { lang: Lang; setLang: (l: Lang) => void; t: (key: string, params?: Params) => string };
 const I18nContext = createContext<I18nValue | null>(null);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
@@ -35,7 +37,10 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   };
 
   // Falls back to English, then to the key itself, so a gap is visible not fatal.
-  const t = (key: string) => lookup(dictionaries[lang], key) ?? lookup(en, key) ?? key;
+  const t = (key: string, params?: Params) => {
+    const raw = lookup(dictionaries[lang], key) ?? lookup(en, key) ?? key;
+    return params ? raw.replace(/\{(\w+)\}/g, (_, k: string) => String(params[k] ?? `{${k}}`)) : raw;
+  };
 
   return <I18nContext.Provider value={{ lang, setLang, t }}>{children}</I18nContext.Provider>;
 }

@@ -15,6 +15,14 @@ export const text = {
   h3: { fontFamily: fonts.headingMedium, fontSize: fontSizes.lg, lineHeight: 28 },
   body: { fontFamily: fonts.bodyRegular, fontSize: fontSizes.md, lineHeight: 24 },
   bodyMedium: { fontFamily: fonts.bodyMedium, fontSize: fontSizes.md, lineHeight: 24 },
+  label: { fontFamily: fonts.bodyMedium, fontSize: fontSizes.sm, lineHeight: 20 },
   small: { fontFamily: fonts.bodyRegular, fontSize: fontSizes.sm, lineHeight: 20 },
   caption: { fontFamily: fonts.bodyMedium, fontSize: fontSizes.xs, lineHeight: 16 },
+  overline: {
+    fontFamily: fonts.bodyMedium,
+    fontSize: fontSizes.xs,
+    lineHeight: 16,
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+  },
 } as const;
