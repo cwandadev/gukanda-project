@@ -2,7 +2,11 @@
   "common": {
     "language": "Langue",
     "previewAs": "Aperçu en tant que",
-    "placeholder": "Cet écran est un espace réservé. Son contenu arrive dans un prochain lot."
+    "placeholder": "Cet écran est un espace réservé. Son contenu arrive dans un prochain lot.",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "delete": "Supprimer",
+    "cancel": "Annuler"
   },
   "roles": {
     "client": "Client",
@@ -26,7 +30,14 @@
   "admin": {
     "team": "Équipe",
     "availability": "Disponibilités",
-    "data": "Données"
+    "data": "Données",
+    "availabilitySubtitle": "Horaires, absences et règles de réservation.",
+    "practitioner": "Praticien",
+    "noPractitioners": "Aucun praticien pour l’instant",
+    "noPractitionersText": "Donnez d’abord le rôle de praticien à un compte. L’écran Équipe arrive bientôt.",
+    "error": {
+      "practitioners": "Impossible de charger les praticiens."
+    }
   },
   "dev": {
     "test": "Test",
@@ -44,7 +55,7 @@
     "signUpTitle": "Créer votre compte",
     "email": "Courriel",
     "password": "Mot de passe",
-    "passwordHint": "au moins 8 caractères",
+    "passwordHint": "Au moins 8 caractères",
     "fullName": "Nom complet",
     "signIn": "Se connecter",
     "signUp": "Créer un compte",
@@ -64,7 +75,108 @@
       "rateLimit": "Trop de tentatives. Veuillez patienter un instant et réessayer.",
       "emailNotConfirmed": "Veuillez d’abord confirmer votre adresse courriel.",
       "network": "Impossible de joindre le serveur. Vérifiez votre connexion.",
-      "generic": "Un problème est survenu. Veuillez réessayer."
+      "generic": "Un problème est survenu. Veuillez réessayer.",
+      "emailInvalid": "Veuillez saisir une adresse courriel valide."
+    },
+    "welcomeBack": "Bon retour",
+    "signInSubtitle": "Connectez-vous pour gérer vos séances.",
+    "createTitle": "Créer votre compte",
+    "signUpSubtitle": "Cela ne prend qu’une minute.",
+    "showPassword": "Afficher le mot de passe",
+    "hidePassword": "Masquer le mot de passe"
+  },
+  "weekdays": {
+    "0": "Dimanche",
+    "1": "Lundi",
+    "2": "Mardi",
+    "3": "Mercredi",
+    "4": "Jeudi",
+    "5": "Vendredi",
+    "6": "Samedi"
+  },
+  "weekdaysShort": {
+    "0": "dim.",
+    "1": "lun.",
+    "2": "mar.",
+    "3": "mer.",
+    "4": "jeu.",
+    "5": "ven.",
+    "6": "sam."
+  },
+  "brand": {
+    "headline": "Évaluation de la santé corporelle et soins du fascia",
+    "subline": "Repérez vos zones de tension et suivez vos séances.",
+    "tagline": "Cartographie corporelle · Évaluation · Suivi"
+  },
+  "home": {
+    "greeting": "Bonjour {name}",
+    "greetingNoName": "Bonjour",
+    "subtitle": "Vos rendez-vous et vos rapports au même endroit.",
+    "heroLabel": "Évaluation corporelle",
+    "heroTitle": "Réservez votre évaluation",
+    "heroText": "Choisissez un moment qui vous convient. Cela prend environ 5 minutes.",
+    "heroCta": "Réserver",
+    "expectTitle": "À quoi vous attendre",
+    "step1": "Réservez un créneau et parlez-nous de vos préoccupations.",
+    "step2": "Rencontrez votre praticien pour votre évaluation corporelle.",
+    "step3": "Consultez votre rapport dans Mes rapports."
+  },
+  "hours": {
+    "title": "Horaires de travail",
+    "subtitle": "Indiquez quand les clients peuvent réserver. Toutes les heures sont dans le fuseau horaire de l’entreprise ({tz}).",
+    "closed": "Fermé",
+    "from": "De",
+    "to": "À",
+    "addHours": "Ajouter des horaires",
+    "copyMonday": "Copier le lundi sur mar.–ven.",
+    "save": "Enregistrer les horaires",
+    "saved": "Horaires enregistrés.",
+    "unsaved": "Vous avez des modifications non enregistrées.",
+    "error": {
+      "hours_invalid": "Chaque plage doit se terminer après son début.",
+      "hours_overlap": "Deux plages se chevauchent le même jour. Veuillez les ajuster.",
+      "generic": "Impossible d’enregistrer les horaires. Veuillez réessayer.",
+      "load": "Impossible de charger les horaires."
+    }
+  },
+  "timeOff": {
+    "title": "Absences",
+    "subtitle": "Bloquez les jours ou les heures où vous n’êtes pas disponible.",
+    "add": "Ajouter une absence",
+    "empty": "Aucune absence à venir.",
+    "start": "Date de début",
+    "end": "Date de fin",
+    "allDay": "Toute la journée",
+    "startTime": "Heure de début",
+    "endTime": "Heure de fin",
+    "reason": "Motif (facultatif)",
+    "save": "Enregistrer l’absence",
+    "deleteTitle": "Supprimer cette absence ?",
+    "deleteText": "Les clients pourront de nouveau réserver ces créneaux.",
+    "pickDate": "Choisir une date",
+    "error": {
+      "invalid": "La fin doit être après le début.",
+      "generic": "Un problème est survenu. Veuillez réessayer.",
+      "load": "Impossible de charger les absences."
+    }
+  },
+  "rules": {
+    "title": "Règles de réservation",
+    "subtitle": "Ces règles s’appliquent à chaque réservation.",
+    "timezone": "Fuseau horaire",
+    "notice": "Préavis minimum pour annuler ou reporter",
+    "noticeHint": "Les clients ne peuvent pas annuler ou reporter plus près du rendez-vous que ce délai.",
+    "step": "Heures de début des rendez-vous toutes les",
+    "horizon": "Les clients peuvent réserver jusqu’à",
+    "hours": "{n} h",
+    "minutes": "{n} min",
+    "days": "{n} jours",
+    "none": "Aucun préavis",
+    "save": "Enregistrer les règles",
+    "saved": "Règles enregistrées.",
+    "error": {
+      "load": "Impossible de charger les règles de réservation.",
+      "save": "Impossible d’enregistrer les règles. Seul un administrateur peut les modifier."
     }
   }
 }

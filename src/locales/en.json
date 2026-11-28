@@ -2,7 +2,11 @@
   "common": {
     "language": "Language",
     "previewAs": "Preview as",
-    "placeholder": "This screen is a placeholder. Its content comes in a later chunk."
+    "placeholder": "This screen is a placeholder. Its content comes in a later chunk.",
+    "previous": "Previous",
+    "next": "Next",
+    "delete": "Delete",
+    "cancel": "Cancel"
   },
   "roles": {
     "client": "Client",
@@ -26,7 +30,14 @@
   "admin": {
     "team": "Team",
     "availability": "Availability",
-    "data": "Data"
+    "data": "Data",
+    "availabilitySubtitle": "Working hours, time off and booking rules.",
+    "practitioner": "Practitioner",
+    "noPractitioners": "No practitioners yet",
+    "noPractitionersText": "Give an account the practitioner role first. The Team screen is coming soon.",
+    "error": {
+      "practitioners": "We could not load the practitioners."
+    }
   },
   "dev": {
     "test": "Test",
@@ -44,7 +55,7 @@
     "signUpTitle": "Create your account",
     "email": "Email",
     "password": "Password",
-    "passwordHint": "at least 8 characters",
+    "passwordHint": "At least 8 characters",
     "fullName": "Full name",
     "signIn": "Sign in",
     "signUp": "Create account",
@@ -64,7 +75,108 @@
       "rateLimit": "Too many attempts. Please wait a moment and try again.",
       "emailNotConfirmed": "Please confirm your email address first.",
       "network": "Could not reach the server. Check your connection.",
-      "generic": "Something went wrong. Please try again."
+      "generic": "Something went wrong. Please try again.",
+      "emailInvalid": "Please enter a valid email address."
+    },
+    "welcomeBack": "Welcome back",
+    "signInSubtitle": "Sign in to manage your sessions.",
+    "createTitle": "Create your account",
+    "signUpSubtitle": "It only takes a minute.",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
+  },
+  "weekdays": {
+    "0": "Sunday",
+    "1": "Monday",
+    "2": "Tuesday",
+    "3": "Wednesday",
+    "4": "Thursday",
+    "5": "Friday",
+    "6": "Saturday"
+  },
+  "weekdaysShort": {
+    "0": "Sun",
+    "1": "Mon",
+    "2": "Tue",
+    "3": "Wed",
+    "4": "Thu",
+    "5": "Fri",
+    "6": "Sat"
+  },
+  "brand": {
+    "headline": "Body health assessment & fascia care",
+    "subline": "Understand your areas of tension and keep track of your sessions.",
+    "tagline": "Body mapping · Assessment · Follow-up"
+  },
+  "home": {
+    "greeting": "Hello, {name}",
+    "greetingNoName": "Hello",
+    "subtitle": "Your appointments and reports in one place.",
+    "heroLabel": "Body assessment",
+    "heroTitle": "Book your assessment",
+    "heroText": "Choose a time that suits you. It takes about 5 minutes.",
+    "heroCta": "Book now",
+    "expectTitle": "What to expect",
+    "step1": "Book a time and tell us about your concerns.",
+    "step2": "Meet your practitioner for your body assessment.",
+    "step3": "Read your report in My Reports."
+  },
+  "hours": {
+    "title": "Working hours",
+    "subtitle": "Set when clients can book. All times are in the business time zone ({tz}).",
+    "closed": "Closed",
+    "from": "From",
+    "to": "To",
+    "addHours": "Add hours",
+    "copyMonday": "Copy Monday to Tue–Fri",
+    "save": "Save working hours",
+    "saved": "Working hours saved.",
+    "unsaved": "You have unsaved changes.",
+    "error": {
+      "hours_invalid": "Each range must end after it starts.",
+      "hours_overlap": "Two ranges on the same day overlap. Please adjust them.",
+      "generic": "We could not save the working hours. Please try again.",
+      "load": "We could not load the working hours."
+    }
+  },
+  "timeOff": {
+    "title": "Time off",
+    "subtitle": "Block days or hours when you are not available.",
+    "add": "Add time off",
+    "empty": "No upcoming time off.",
+    "start": "Start date",
+    "end": "End date",
+    "allDay": "All day",
+    "startTime": "Start time",
+    "endTime": "End time",
+    "reason": "Reason (optional)",
+    "save": "Save time off",
+    "deleteTitle": "Delete this time off?",
+    "deleteText": "Clients will be able to book these times again.",
+    "pickDate": "Choose a date",
+    "error": {
+      "invalid": "The end must be after the start.",
+      "generic": "Something went wrong. Please try again.",
+      "load": "We could not load the time off."
+    }
+  },
+  "rules": {
+    "title": "Booking rules",
+    "subtitle": "These rules apply to every booking.",
+    "timezone": "Time zone",
+    "notice": "Minimum notice to cancel or reschedule",
+    "noticeHint": "Clients cannot cancel or reschedule closer to the appointment than this.",
+    "step": "Appointment start times every",
+    "horizon": "Clients can book up to",
+    "hours": "{n} h",
+    "minutes": "{n} min",
+    "days": "{n} days",
+    "none": "No minimum",
+    "save": "Save booking rules",
+    "saved": "Booking rules saved.",
+    "error": {
+      "load": "We could not load the booking rules.",
+      "save": "The rules could not be saved. Only an admin can change them."
     }
   }
 }

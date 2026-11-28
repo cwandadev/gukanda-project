@@ -24,3 +24,9 @@
 - Web is a single-page app (app.json web.output = single, vercel.json rewrites to index.html): SDK 58's default `server` output does not work on Vercel static hosting. Vercel only deploys the WEB build; phone builds come later with EAS.
 - Vercel needs EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY (Production + Preview) BEFORE the build, they are inlined at build time; never the secret key. scripts/check-env.mjs stops the build with a clear message if they are missing.
 
+<!-- chunk-4a -->
+## Chunk 4a: design system, login, hours and time off
+- Design: tokens in src/theme (plum/cream, 14px buttons, 20px cards, label/overline text styles); shared components in src/components (Button, TextField, Select, Toggle, SegmentedControl, Banner, CalendarMonth, DateField, ConfirmDialog...). Login is ONE screen with a Sign in / Create account toggle (split layout on wide web). Native date pickers do not work on web, so we use our own calendar and time dropdowns.
+- Working hours + time off: practitioner = Settings tab, admin = Availability tab (pick a practitioner, plus Booking rules). Saved through the database functions set_weekly_hours and add_time_off (they run with the caller's rights; France local times are converted to UTC in the database). Business time zone is now Europe/Paris.
+- Run supabase/sql/005 then 900 in the SQL Editor (110 checks, all must be true). Booking rules (cancel notice 24 h, 30-minute slots, 60-day horizon) live in business_settings and are used by the booking chunk (4b).
+
